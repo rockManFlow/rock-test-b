@@ -6,9 +6,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-@SpringBootApplication(scanBasePackages = {"com.test"})
+@SpringBootApplication(scanBasePackages = {"com.test.rocka"})
 @Slf4j
-@EnableRpc(scanBasePackages="com.test")
+@EnableRpc
 public class TestAApplication {
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(TestAApplication.class, args);

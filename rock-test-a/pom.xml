@@ -39,7 +39,7 @@
         <dependency>
             <groupId>com.rock</groupId>
             <artifactId>rock-rpc</artifactId>
-            <version>1.0.1.RELEASE</version>
+            <version>0.0.1-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-log4j12</artifactId>

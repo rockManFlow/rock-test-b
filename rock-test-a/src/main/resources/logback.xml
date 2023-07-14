@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+    <property name="LOG_HOME" value="/Users/opayc/logs" />
+    <property name="LOG_FILE_NAME" value="rock-test-a"/>
+    <property name="LOG_PATTERN" value="%date{yyyy-MM-dd HH:mm:ss.SSS} %-5level[%thread][%X{traceId}]%logger{56}.%method:%L -%msg%n"/>
+
+<!--    控制台输出-->
+    <appender name="consoleApp" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>${LOG_PATTERN}</pattern>
+        </layout>
+    </appender>
+
+    <appender name="fileInfoApp" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <file>
+            ${LOG_HOME}/${LOG_FILE_NAME}-info.log
+        </file>
+        <!-- 滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 输出路径 -->
+            <fileNamePattern>${LOG_HOME}/${LOG_FILE_NAME}.info-%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <MaxHistory>3</MaxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <appender name="fileErrorApp" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+        <file>
+            ${LOG_HOME}/${LOG_FILE_NAME}-err.log
+        </file>
+
+        <!-- 设置滚动策略 -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 路径 -->
+            <fileNamePattern>${LOG_HOME}/${LOG_FILE_NAME}.err-%d{yyyy-MM-dd}.%i.zip</fileNamePattern>
+            <maxFileSize>50MB</maxFileSize>
+            <!-- 控制保留的归档文件的最大数量，超出数量就删除旧文件，假设设置每个月滚动，
+            <maxHistory> 是1，则只保存最近多少天的文件，删除之前的旧文件 -->
+            <MaxHistory>30</MaxHistory>
+        </rollingPolicy>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="consoleApp"/>
+        <appender-ref ref="fileInfoApp"/>
+        <appender-ref ref="fileErrorApp"/>
+    </root>
+</configuration>
